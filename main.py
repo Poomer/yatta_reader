@@ -50,10 +50,10 @@ host_url = "http://intaniarunner.com/icmm2017/raceYattaServer.php"
 logDirectory = '/home/pi/samyan/yatta_log/'
 
 
-print "---------------yatta_cfg Init--------------"
-print sn
-print host_url
-print logDirectory
+print ("---------------yatta_cfg Init--------------")
+print (sn)
+print (host_url)
+print (logDirectory)
 
 
 yatta_lib.init(SIM_READDER)
@@ -75,7 +75,7 @@ yatta_lib.init(SIM_READDER)
 
 
 
-print "--------Start Inventory YATTA!!!"
+print ("--------Start Inventory YATTA!!!")
 antId = 0
 antEnabled = [True, True, True, True]
 antInit = [False, False, False, False]
@@ -86,31 +86,31 @@ try:
     #Scan EPC
     while True:
         if(yatta_st == 0):  #set timer
-            print "setTimer"
+            print ("setTimer")
             mainTimeout_start(scaning_time_sec)
             yatta_st = 1
-            print "Scaning start " + str(scaning_time_sec) +" sec"
+            print ("Scaning start " + str(scaning_time_sec) +" sec")
             
         elif(yatta_st == 1):  #set scan
             if(antEnabled[antId] == True):
                 yatta_lib.setWorkAntenna(antId)
                 if(yatta_lib.get_inventory() == False):
                     antEnabled[antId] = False
-                    print str(antId) + " False"
+                    print (str(antId) + " False")
                 else:
                     if(antInit[antId] == False):
                         antInit[antId] = True;
-                        print str(antId) + " init success"    
+                        print (str(antId) + " init success")
 ##            antId++
             if(mainTimeoutFlag):
                 yatta_st = 2
-                print "Sending data " + str(yatta_lib.numQHTTP())+ " ..."
+                print ("Sending data " + str(yatta_lib.numQHTTP())+ " ...")
         elif (yatta_st == 2):   #
             if not (yatta_lib.qHttp_Empty()):
                 #------------ Local data log part --------------
                 tmpHTTPYatta = yatta_lib.getQHttp()
                 if (0):
-                    print "httpThread>> peekQHttp=" + tmpHTTPYatta
+                    print ("httpThread>> peekQHttp=" + tmpHTTPYatta)
                     yatta_lib.getQHttp()
                 else: #Below using send http
                     server_url = host_url + "?sn=" + sn + "&tag_id=" + tmpHTTPYatta
@@ -122,7 +122,7 @@ try:
                             #print "httpThread>> return ="+str(r.status_code)
                             #yatta_lib.getQHttp()
                     except:
-                        print "network fail"
+                        print ("network fail")
                         
 #End sending
                 #print "\t:NumLog= " + str(yatta_lib.numQHTTP())
@@ -143,7 +143,7 @@ try:
                 
             if (yatta_lib.qHttp_Empty() and yatta_lib.qLog_Empty()):
                 yatta_st = 0
-                print "Data flushed " + str(sendingCnt)
+                print ("Data flushed " + str(sendingCnt))
                 sendingCnt = 0
             
    
@@ -186,7 +186,7 @@ try:
 ##            #print "logThread>>" + datalog_str
 ##            f.close()
 except KeyboardInterrupt: # press Ctrl + c
-    print "Exit program press F5 to run again"
+    print ("Exit program press F5 to run again")
         
     
 

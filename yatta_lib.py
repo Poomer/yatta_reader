@@ -266,7 +266,7 @@ def get_inventory():
                 return True
             elif(int(rxBuff[1], 16)  == 0x04):
                 #don with error
-                print "get_inventory error="+str(rxBuff[4])
+                print ("get_inventory error="+str(rxBuff[4]))
                 rxBuff = []
                 return False
             else:
@@ -282,7 +282,7 @@ def get_inventory():
                 #epc_tag = rxBuff[7:7+EPC_LEN]
                 push_epc_tag(time.time(), rxBuff[7:7+EPC_LEN])
                 rxBuff = []
-                print "get_inventory total num= " + str(num)
+                print ("get_inventory total num= " + str(num))
                 return True
             else:
                 #print "epc tag not found"
